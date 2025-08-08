@@ -1,0 +1,105 @@
+# RAG Data Analytics Platform
+
+A Retrieval-Augmented Generation (RAG) model for data analytics professionals, capable of processing Excel, CSV, and PDF files, analyzing data, generating insights, and exporting to PowerBI (CSV) or Tableau (.hyper) formats.
+
+## Prerequisites
+- Python 3.10
+- Git
+- Ollama (for Llama 3.2)
+- Optional: Docker for containerized setup
+
+## Setup in GitHub Codespaces
+1. **Create a Repository**:
+   - Upload the project files to a new GitHub repository.
+   - Create a Codespace: Go to the repository, click **Code** > **Codespaces** > **Create Codespace on main**.
+
+2. **Install Ollama**:
+   ```bash
+   curl -fsSL https://ollama.com/install.sh | sh
+   ollama pull llama3.2
+   ollama serve &
+   ```
+
+3. **Install Dependencies**:
+   ```bash
+   cd rag_data_analytics
+   pip install -r requirements.txt
+   ```
+
+4. **Run the App**:
+   ```bash
+   streamlit run app.py
+   ```
+   - Forward port 8501 in the **Ports** tab (set to **Public**) and open the URL.
+
+## Setup Locally (Windows)
+1. **Install Prerequisites**:
+   - Python 3.10: https://www.python.org
+   - Git: https://git-scm.com
+   - Ollama: https://ollama.com
+     ```bash
+     ollama pull llama3.2
+     ollama serve
+     ```
+
+2. **Clone or Extract Project**:
+   - Extract this ZIP or clone the repository.
+   - Navigate to the project folder:
+     ```bash
+     cd rag_data_analytics
+     ```
+
+3. **Install Dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Run the App**:
+   ```bash
+   streamlit run app.py
+   ```
+   - Open `http://localhost:8501` in your browser.
+
+## Running with Docker
+1. **Install Docker**:
+   - Windows: Install Docker Desktop (https://www.docker.com).
+   - Codespaces: Docker is pre-installed.
+
+2. **Run Containers**:
+   ```bash
+   docker-compose up -d
+   ```
+   - Access the app at `http://localhost:8501`.
+
+## Usage
+1. Upload an Excel, CSV, or PDF file in the Streamlit app.
+2. View parsed data and insights (e.g., sales trends, anomalies).
+3. Query the data (e.g., What are the top sales regions?).
+4. Export to PowerBI (CSV) or Tableau (.hyper) from the `output/` folder.
+
+## Troubleshooting
+- **Ollama Not Responding**:
+  - Restart:
+    ```bash
+    ollama serve &
+    ```
+  - Pull model:
+    ```bash
+    ollama pull llama3.2
+    ```
+- **Dependency Errors**:
+  - Re-run:
+    ```bash
+    pip install -r requirements.txt
+    ```
+- **PDF Parsing Issues**:
+  - Ensure PDFs have structured tables.
+- **Port Issues**:
+  - Forward port 8501 in Codespaces or check `http://localhost:8501`.
+
+## Notes
+- No API key is required (uses `pdfplumber` instead of `LlamaParse`).
+- PowerBI: Import CSV files into PowerBI Desktop.
+- Tableau: Open `.hyper` files in Tableau Desktop 2023.1+.
+
+Code fixed for Tableau export and other issues as of August 2025.
