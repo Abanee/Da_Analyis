@@ -54,16 +54,37 @@ class RAGPipeline:
     #         raise RuntimeError(f"Failed to load data into RAG pipeline: {str(e)}")
     
 
+    # def query(self, question):
+    #     """Query the RAG pipeline with a question."""
+    #     if not self.index:
+    #         return "No data loaded."
+    #     if not isinstance(question, str) or not question.strip():
+    #         raise ValueError("Invalid or empty question provided.")
+
+    #     try:
+    #         query_engine = self.index.as_query_engine(llm=self.llm)
+    #         response = query_engine.query(question)
+    #         return response.response
+    #     except Exception as e:
+    #         raise RuntimeError(f"Failed to process query: {str(e)}")
+
     def query(self, question):
-        """Query the RAG pipeline with a question."""
+    # """Query the RAG pipeline with a question."""
         if not self.index:
             return "No data loaded."
         if not isinstance(question, str) or not question.strip():
             raise ValueError("Invalid or empty question provided.")
-
+    
         try:
             query_engine = self.index.as_query_engine(llm=self.llm)
             response = query_engine.query(question)
-            return response.response
+        # Safely access response, ignoring missing 'usage'
+            if hasattr(response, 'response'):
+                return response.response
+            else:
+                return str(response)  # Fallback to string conversion
         except Exception as e:
+        # Log the error for debugging (optional but good practice)
+            print(f"Query error: {str(e)}")
             raise RuntimeError(f"Failed to process query: {str(e)}")
+
