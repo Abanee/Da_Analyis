@@ -15,18 +15,16 @@ class RAGPipeline:
             self.index = None
         except Exception as e:
             raise RuntimeError(f"Failed to initialize RAGPipeline: {str(e)}")
-
     def load_data(self, df, text):
-        """Load DataFrame and text into the RAG pipeline."""
+    # """Load DataFrame and text into the RAG pipeline."""
         if not isinstance(df, pd.DataFrame) or df.empty:
             raise ValueError("Invalid or empty DataFrame provided.")
         if not isinstance(text, str) or not text.strip():
             raise ValueError("Invalid or empty text provided.")
-
+    
         try:
             df_text = df.to_string()
-            documents = [Document(text=df_text + "
-" + text)]
+            documents = [Document(text=df_text + "\n" + text)]
             self.index = VectorStoreIndex.from_documents(
                 documents,
                 vector_store=self.vector_store,
@@ -34,6 +32,27 @@ class RAGPipeline:
             )
         except Exception as e:
             raise RuntimeError(f"Failed to load data into RAG pipeline: {str(e)}")
+
+
+    # def load_data(self, df, text):
+    #     """Load DataFrame and text into the RAG pipeline."""
+    #     if not isinstance(df, pd.DataFrame) or df.empty:
+    #         raise ValueError("Invalid or empty DataFrame provided.")
+    #     if not isinstance(text, str) or not text.strip():
+    #         raise ValueError("Invalid or empty text provided.")
+
+    #     try:
+    #         df_text = df.to_string()
+    #         documents = [Document(text=df_text + "\n" + text)]
+
+    #         self.index = VectorStoreIndex.from_documents(
+    #             documents,
+    #             vector_store=self.vector_store,
+    #             embed_model=self.embed_model
+    #         )
+    #     except Exception as e:
+    #         raise RuntimeError(f"Failed to load data into RAG pipeline: {str(e)}")
+    
 
     def query(self, question):
         """Query the RAG pipeline with a question."""
